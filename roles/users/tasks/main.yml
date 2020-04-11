@@ -2,9 +2,11 @@
 - name: create users
   user:
     state: present
+    system: "{{ item.system | default(omit) }}"
     name: "{{ item.name }}"
-    groups: "{{ item.groups }}"
+    groups: "{{ item.groups | default(omit) }}"
     shell: /bin/bash
+    create_home: "{{ item.create_home | default(omit) }}"
   become: true
   with_items: "{{ users }}"
 
@@ -12,7 +14,7 @@
   authorized_key:
     state: present
     user: "{{ item.name }}"
-    key: "{{ item.authorized_key }}"
+    key: "{{ item.authorized_key | default(None) }}"
     exclusive: True
   become: true
   with_items: "{{ users }}"

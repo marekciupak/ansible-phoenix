@@ -1,0 +1,30 @@
+---
+- name: install PostgreSQL
+  apt:
+    name:
+      - postgresql
+      - postgresql-client
+      - python3-psycopg2
+    state: present
+    cache_valid_time: 3600
+  become: yes
+
+- name: create a user in PostgreSQL
+  postgresql_user:
+    name: "{{ user.name }}"
+    password: "{{ user.password }}"
+    role_attr_flags: NOSUPERUSER,NOCREATEROLE,NOCREATEDB,INHERIT,LOGIN,NOREPLICATION,NOBYPASSRLS
+  become: yes
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true
+
+- name: create a database in PostgreSQL
+  postgresql_db:
+    name: "{{ database.name }}"
+    owner: "{{ user.name }}"
+    encoding: UTF8
+  become: yes
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true

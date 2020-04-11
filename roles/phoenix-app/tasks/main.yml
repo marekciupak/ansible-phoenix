@@ -1,0 +1,18 @@
+---
+- name: create /var/www directory
+  file:
+    path: /var/www
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: create a main directory for the application
+  file:
+    path: "/var/www/{{ app_name }}"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ group }}"
+    mode: '0755'
+  become: true

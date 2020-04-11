@@ -3,7 +3,7 @@
   user: admin
 
   vars:
-    ansible_python_interpreter: /usr/bin/python
+    ansible_python_interpreter: /usr/bin/python3
 
   roles:
     - role: sudo
@@ -13,3 +13,16 @@
           groups:
             - sudo
           authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        - name: my_app
+          system: yes
+          create_home: no
+    - role: postgresql
+      database:
+        name: my_app_prod
+      user:
+        name: my_app
+        password: "123456"
+    - role: phoenix-app
+      app_name: my_app
+      user_name: my_app
+      group: my_app
