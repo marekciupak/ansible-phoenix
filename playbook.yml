@@ -1,5 +1,15 @@
 ---
 - hosts: all
-  user: root
+  user: admin
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python
 
   roles:
+    - role: sudo
+    - role: users
+      users:
+        - name: admin
+          groups:
+            - sudo
+          authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

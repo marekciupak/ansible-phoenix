@@ -1,0 +1,9 @@
+---
+- name: allow members of group sudo to execute any command without password
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo\sALL='
+    line: '%sudo	ALL=(ALL) NOPASSWD: ALL'
+    validate: /usr/sbin/visudo -cf %s
+  become: true
