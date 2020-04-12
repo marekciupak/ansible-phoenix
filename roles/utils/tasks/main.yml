@@ -1,0 +1,15 @@
+---
+- name: install useful packages
+  apt:
+    name:
+      - vim
+      - mc
+    update_cache: yes
+    cache_valid_time: 3600
+  become: true
+
+- name: set default editor
+  alternatives:
+    name: editor
+    path: /usr/bin/vim.basic
+  become: true
