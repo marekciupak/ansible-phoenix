@@ -1,0 +1,52 @@
+---
+  - name: install ufw
+    apt:
+      name: ufw
+      update_cache: yes
+      cache_valid_time: 3600
+    become: true
+
+  - name: disable and reset firewall to installation defaults
+    ufw:
+      state: reset
+    become: true
+    tags:
+      - never
+      - ufw__reset
+
+  - name: set logging
+    ufw:
+      logging: "{{ ufw__logging }}"
+    become: true
+
+  - name: set firewall rules
+    ufw:
+      rule: "{{ item.rule }}"
+      interface: "{{ item.interface | default(omit) }}"
+      proto: "{{ item.proto | default('any') }}"
+      direction: "{{ item.direction | default('in') }}"
+      from_ip: "{{ item.from_ip | default('any') }}"
+      to_ip: "{{ item.to_ip | default('any') }}"
+      from_port: "{{ item.from_port | default(omit) }}"
+      to_port: "{{ item.to_port | default(omit) }}"
+      log: "{{ item.log | default(false) }}"
+      comment: "{{ item.comment | default(omit) }}"
+    with_items: "{{ ufw__rules }}"
+    become: true
+
+  - name: set the default policy for incoming traffic
+    ufw:
+      policy: "{{ ufw__default_incoming_policy }}"
+      direction: incoming
+    become: true
+
+  - name: set the default policy for outgoing traffic
+    ufw:
+      policy: "{{ ufw__default_outgoing_policy }}"
+      direction: outgoing
+    become: true
+
+  - name: reload firewall and enable firewall on boot
+    ufw:
+      state: enabled
+    become: true

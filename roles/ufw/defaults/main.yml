@@ -1,0 +1,5 @@
+---
+ufw__logging: 'low'
+ufw__default_incoming_policy: 'allow'
+ufw__default_outgoing_policy: 'allow'
+ufw__rules: []

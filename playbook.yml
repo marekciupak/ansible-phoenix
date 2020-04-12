@@ -4,8 +4,44 @@
 
   vars:
     ansible_python_interpreter: /usr/bin/python3
+    ufw__default_incoming_policy: deny
+    ufw__default_outgoing_policy: deny
+    ufw__rules:
+      - rule: allow
+        proto: udp
+        direction: out
+        to_port: 53
+      - rule: allow
+        proto: udp
+        direction: out
+        to_port: 123
+      - rule: allow
+        proto: tcp
+        direction: out
+        to_port: 22
+      - rule: allow
+        proto: tcp
+        direction: out
+        to_port: 80
+      - rule: allow
+        proto: tcp
+        direction: out
+        to_port: 443
+      - rule: allow
+        proto: tcp
+        direction: in
+        to_port: 22
+      - rule: allow
+        proto: tcp
+        direction: in
+        to_port: 80
+      - rule: allow
+        proto: tcp
+        direction: in
+        to_port: 443
 
   roles:
+    - role: ufw
     - role: utils
     - role: sudo
     - role: users
