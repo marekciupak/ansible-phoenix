@@ -1,0 +1,6 @@
+---
+- name: restart phoenix app
+  systemd:
+    name: "{{ app_name }}"
+    state: restarted
+  become: yes

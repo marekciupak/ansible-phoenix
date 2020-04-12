@@ -13,6 +13,8 @@
           groups:
             - sudo
           authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        - name: deploy
+          authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
         - name: my_app
           system: yes
           create_home: no
@@ -24,5 +26,13 @@
         password: "123456"
     - role: phoenix-app
       app_name: my_app
-      user_name: my_app
-      group: my_app
+      deploy:
+        user: deploy
+      service:
+        user: my_app
+        group: my_app
+      database:
+        name: my_app_prod
+        user: my_app
+        password: "123456"
+      secret_key_base: rQF1/xmb9GphVLG0CjueWKMsWsEkyV1kv0hSQaLL1sin5hHH7OQTbHqISu55Ayz9

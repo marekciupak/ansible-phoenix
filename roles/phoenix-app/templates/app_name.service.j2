@@ -1,0 +1,16 @@
+[Unit]
+Description={{ app_name }}
+After=network.target
+Wants=postgresql.service
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/srv/{{ app_name }}/bin/{{ app_name }} start
+User={{ service.user }}
+Group={{ service.group }}
+WorkingDirectory=/srv/{{ app_name }}/
+EnvironmentFile=/etc/{{ app_name }}-environment
+
+[Install]
+WantedBy=multi-user.target

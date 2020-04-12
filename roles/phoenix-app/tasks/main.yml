@@ -1,18 +1,51 @@
 ---
-- name: create /var/www directory
+- name: create a root directory for phoenix app
   file:
-    path: /var/www
+    path: "/srv/{{ app_name }}"
     state: directory
-    owner: root
-    group: root
-    mode: '0755'
+    owner: "{{ deploy.user }}"
+    group: "{{ service.group }}"
+    mode: 0755
   become: true
 
-- name: create a main directory for the application
-  file:
-    path: "/var/www/{{ app_name }}"
-    state: directory
-    owner: "{{ user_name }}"
-    group: "{{ group }}"
-    mode: '0755'
-  become: true
+- name: create config file for phoenix app
+  template:
+    src: app_name-environment.j2
+    dest: /etc/{{ app_name }}-environment
+    owner: root
+    group: "{{ service.group }}"
+    mode: 0640
+  become: yes
+
+- name: create phoenix app service's unit file in systemd
+  template:
+    src: app_name.service.j2
+    dest: /etc/systemd/system/{{ app_name }}.service
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  register: systemd_unit_file
+  notify:
+    - restart phoenix app
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+  become: yes
+  when: systemd_unit_file.changed
+
+- name: enable phoenix app service in systemd
+  systemd:
+    name: "{{ app_name }}"
+    enabled: yes
+  become: yes
+
+- name: allow deploy user to restart the phoenix app service
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%deploy\sALL='
+    line: "{{ deploy.user }}	ALL=(ALL) NOPASSWD: /bin/systemctl restart {{ app_name }}"
+    validate: /usr/sbin/visudo -cf %s
+  become: yes
