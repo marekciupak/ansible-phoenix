@@ -1,1 +1,4 @@
-/.vagrant/
+.vagrant/
+/host_vars/
+/group_vars/
+/inventory

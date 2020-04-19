@@ -33,9 +33,9 @@ Scripts for provisioning a server to host [Phoenix Framework](https://www.phoeni
 
   * A server with [Debian GNU/Linux](https://www.debian.org/) 10 (Buster) operating system.
 
-## Configure
+## Configuration
 
-Update [inventory](/inventory) and [host_vars](/host_vars/) directory with your own config.
+Create `inventory` file and `host_vars/` directory with your own config in the root directory of this repo. Use files from [vagrant](/vagrant/) directory as an example.
 
 ## Usage
 
@@ -44,11 +44,20 @@ Update [inventory](/inventory) and [host_vars](/host_vars/) directory with your 
 Before you run the whole script, you may need to create a non-root user(s):
 
 ```shell
-ansible-playbook playbook.yml -i inventory -t users -u root
+ansible-playbook playbook.yml -i inventory -u root -t users
 ```
 
 ### Running scripts
 
 ```shell
-ansible-playbook playbook.yml -i inventory -i admin
+ansible-playbook playbook.yml -i inventory -u admin
+```
+
+## Testing locally (using vagrant)
+
+```shell
+(cd vagrant/ && vagrant up)
+ansible-playbook playbook.yml -i vagrant/inventory -u root -t users
+ansible-playbook playbook.yml -i vagrant/inventory -u admin
+(cd vagrant/ && vagrant halt)
 ```
