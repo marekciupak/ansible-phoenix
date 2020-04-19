@@ -2,7 +2,7 @@
 - name: create phoenix app service's unit file in systemd
   template:
     src: app_name.service.j2
-    dest: /etc/systemd/system/{{ app_name }}.service
+    dest: /etc/systemd/system/{{ phoenix_app__app_name }}.service
     owner: root
     group: root
     mode: "0644"
@@ -19,7 +19,7 @@
 
 - name: enable phoenix app service in systemd
   systemd:
-    name: "{{ app_name }}"
+    name: "{{ phoenix_app__app_name }}"
     enabled: yes
   become: yes
 
@@ -28,6 +28,6 @@
     path: /etc/sudoers
     state: present
     regexp: '^%deploy\sALL='
-    line: "%{{ deploy.group }}	ALL=(ALL) NOPASSWD: /bin/systemctl restart {{ app_name }}"
+    line: "%{{ phoenix_app__deploy_group }}	ALL=(ALL) NOPASSWD: /bin/systemctl restart {{ phoenix_app__app_name }}"
     validate: /usr/sbin/visudo -cf %s
   become: yes

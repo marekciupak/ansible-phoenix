@@ -4,7 +4,7 @@
     state: present
     name: "{{ item }}"
   become: true
-  with_items: "{{ groups_to_create }}"
+  with_items: "{{ users__groups_to_create }}"
 
 - name: create users
   user:

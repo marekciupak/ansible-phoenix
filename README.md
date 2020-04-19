@@ -33,6 +33,10 @@ Scripts for provisioning a server to host [Phoenix Framework](https://www.phoeni
 
   * A server with [Debian GNU/Linux](https://www.debian.org/) 10 (Buster) operating system.
 
+## Configure
+
+Update [inventory](/inventory) and [host_vars](/host_vars/) directory with your own config.
+
 ## Usage
 
 ### Preparation (first run)

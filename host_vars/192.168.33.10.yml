@@ -1,0 +1,62 @@
+---
+ufw__default_incoming_policy: deny
+ufw__default_outgoing_policy: deny
+ufw__rules:
+  - rule: allow
+    proto: udp
+    direction: out
+    to_port: 53
+  - rule: allow
+    proto: udp
+    direction: out
+    to_port: 123
+  - rule: allow
+    proto: tcp
+    direction: out
+    to_port: 22
+  - rule: allow
+    proto: tcp
+    direction: out
+    to_port: 80
+  - rule: allow
+    proto: tcp
+    direction: out
+    to_port: 443
+  - rule: allow
+    proto: tcp
+    direction: in
+    to_port: 22
+  - rule: allow
+    proto: tcp
+    direction: in
+    to_port: 80
+  - rule: allow
+    proto: tcp
+    direction: in
+    to_port: 443
+users__groups_to_create:
+  - deploy
+users:
+  - name: admin
+    groups:
+      - sudo
+      - deploy
+    authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  - name: ci
+    groups:
+      - deploy
+    authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  - name: my_app
+    system: yes
+    create_home: no
+postgresql__db_name: my_app_prod
+postgresql__user_name: my_app
+postgresql__user_password: "123456"
+phoenix_app__app_name: my_app
+phoenix_app__service_user: my_app
+phoenix_app__service_group: my_app
+phoenix_app__deploy_group: deploy
+phoenix_app__db_name: my_app_prod
+phoenix_app__db_user_name: my_app
+phoenix_app__db_user_password: "123456"
+phoenix_app__secret_key_base: rQF1/xmb9GphVLG0CjueWKMsWsEkyV1kv0hSQaLL1sin5hHH7OQTbHqISu55Ayz9

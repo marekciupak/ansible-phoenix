@@ -1,0 +1,63 @@
+---
+- name: create root directory
+  file:
+    path: "/srv/{{ phoenix_app__app_name }}"
+    state: directory
+    owner: root
+    group: "{{ phoenix_app__deploy_group }}"
+    mode: "2775"
+  become: true
+
+- name: create releases directory
+  file:
+    path: "/srv/{{ phoenix_app__app_name }}/releases"
+    state: directory
+    owner: root
+    group: "{{ phoenix_app__deploy_group }}"
+    mode: "2775"
+  become: true
+
+- name: create shared directory
+  file:
+    path: "/srv/{{ phoenix_app__app_name }}/shared"
+    state: directory
+    owner: root
+    group: "{{ phoenix_app__deploy_group }}"
+    mode: "2755"
+  become: true
+
+- name: create tmp directory
+  file:
+    path: "/srv/{{ phoenix_app__app_name }}/shared/tmp"
+    state: directory
+    owner: "{{ phoenix_app__service_user }}"
+    group: "{{ phoenix_app__deploy_group }}"
+    mode: "2770"
+  become: true
+
+- name: create uploads directory
+  file:
+    path: "/srv/{{ phoenix_app__app_name }}/shared/uploads"
+    state: directory
+    owner: "{{ phoenix_app__service_user }}"
+    group: "{{ phoenix_app__deploy_group }}"
+    mode: "2770"
+  become: true
+
+- name: create config directory
+  file:
+    path: "/srv/{{ phoenix_app__app_name }}/config"
+    state: directory
+    owner: root
+    group: "{{ phoenix_app__deploy_group }}"
+    mode: "2755"
+  become: true
+
+- name: create config file with env
+  template:
+    src: env.j2
+    dest: "/srv/{{ phoenix_app__app_name }}/config/env"
+    owner: root
+    group: "{{ phoenix_app__deploy_group }}"
+    mode: "0640"
+  become: yes

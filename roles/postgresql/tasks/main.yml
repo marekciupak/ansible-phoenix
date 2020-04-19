@@ -11,8 +11,8 @@
 
 - name: create a user in PostgreSQL
   postgresql_user:
-    name: "{{ user.name }}"
-    password: "{{ user.password }}"
+    name: "{{ postgresql__user_name }}"
+    password: "{{ postgresql__user_password }}"
     role_attr_flags: NOSUPERUSER,NOCREATEROLE,NOCREATEDB,INHERIT,LOGIN,NOREPLICATION,NOBYPASSRLS
   become: yes
   become_user: postgres
@@ -21,8 +21,8 @@
 
 - name: create a database in PostgreSQL
   postgresql_db:
-    name: "{{ database.name }}"
-    owner: "{{ user.name }}"
+    name: "{{ postgresql__db_name }}"
+    owner: "{{ postgresql__user_name }}"
     encoding: UTF8
   become: yes
   become_user: postgres
