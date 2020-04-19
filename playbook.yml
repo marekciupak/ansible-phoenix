@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  user: admin
 
   vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -44,17 +43,24 @@
     - role: ufw
     - role: utils
     - role: sudo
+      tags: users
     - role: users
+      groups_to_create:
+        - deploy
       users:
         - name: admin
           groups:
             - sudo
+            - deploy
           authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-        - name: deploy
+        - name: ci
+          groups:
+            - deploy
           authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
         - name: my_app
           system: yes
           create_home: no
+      tags: users
     - role: postgresql
       database:
         name: my_app_prod
@@ -63,11 +69,11 @@
         password: "123456"
     - role: phoenix-app
       app_name: my_app
-      deploy:
-        user: deploy
       service:
         user: my_app
         group: my_app
+      deploy:
+        group: deploy
       database:
         name: my_app_prod
         user: my_app

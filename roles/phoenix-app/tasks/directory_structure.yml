@@ -1,0 +1,63 @@
+---
+- name: create root directory
+  file:
+    path: "/srv/{{ app_name }}"
+    state: directory
+    owner: root
+    group: "{{ deploy.group }}"
+    mode: "2775"
+  become: true
+
+- name: create releases directory
+  file:
+    path: "/srv/{{ app_name }}/releases"
+    state: directory
+    owner: root
+    group: "{{ deploy.group }}"
+    mode: "2775"
+  become: true
+
+- name: create shared directory
+  file:
+    path: "/srv/{{ app_name }}/shared"
+    state: directory
+    owner: root
+    group: "{{ deploy.group }}"
+    mode: "2755"
+  become: true
+
+- name: create tmp directory
+  file:
+    path: "/srv/{{ app_name }}/shared/tmp"
+    state: directory
+    owner: "{{ service.user }}"
+    group: "{{ deploy.group }}"
+    mode: "2770"
+  become: true
+
+- name: create uploads directory
+  file:
+    path: "/srv/{{ app_name }}/shared/uploads"
+    state: directory
+    owner: "{{ service.user }}"
+    group: "{{ deploy.group }}"
+    mode: "2770"
+  become: true
+
+- name: create config directory
+  file:
+    path: "/srv/{{ app_name }}/config"
+    state: directory
+    owner: root
+    group: "{{ deploy.group }}"
+    mode: "2755"
+  become: true
+
+- name: create config file with env
+  template:
+    src: env.j2
+    dest: "/srv/{{ app_name }}/config/env"
+    owner: root
+    group: "{{ deploy.group }}"
+    mode: "0640"
+  become: yes

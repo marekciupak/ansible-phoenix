@@ -6,11 +6,11 @@ Wants=postgresql.service
 [Service]
 Type=simple
 Restart=on-failure
-ExecStart=/srv/{{ app_name }}/bin/{{ app_name }} start
+ExecStart=/srv/{{ app_name }}/current/bin/{{ app_name }} start
 User={{ service.user }}
 Group={{ service.group }}
-WorkingDirectory=/srv/{{ app_name }}/
-EnvironmentFile=/etc/{{ app_name }}-environment
+WorkingDirectory=/srv/{{ app_name }}/current/
+EnvironmentFile=/srv/{{ app_name }}/config/env
 
 [Install]
 WantedBy=multi-user.target

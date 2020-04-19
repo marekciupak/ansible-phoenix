@@ -32,3 +32,19 @@ Scripts for provisioning a server to host [Phoenix Framework](https://www.phoeni
 ### Target machine
 
   * A server with [Debian GNU/Linux](https://www.debian.org/) 10 (Buster) operating system.
+
+## Usage
+
+### Preparation (first run)
+
+Before you run the whole script, you may need to create a non-root user(s):
+
+```shell
+ansible-playbook playbook.yml -i inventory -t users -u root
+```
+
+### Running scripts
+
+```shell
+ansible-playbook playbook.yml -i inventory -i admin
+```
