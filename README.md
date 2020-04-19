@@ -4,34 +4,42 @@ Scripts for provisioning a server to host [Phoenix Framework](https://www.phoeni
 
 ## Requirements
 
+### Target machine
+
+* A server with [Debian GNU/Linux](https://www.debian.org/) 10 (Buster) operating system.
+
 ### Control machine
 
 * Install [Python](https://www.python.org/)
 
-  You can use [asdf-vm](https://asdf-vm.com/#/core-manage-asdf-vm) to manage Python versions:
+  <details>
+    <summary>See sample instruction for macOS users</summary>
 
-  ```shell
-  # Sample instruction for macOS users:
-  brew install asdf
-  echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
-  echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.zshrc
-  asdf plugin-add python
-  asdf install python 3.8.2
-  asdf global python 3.8.2
-  pip install --upgrade pip
-  ```
+    #### Installing Python on macOS using [Homebrew](https://brew.sh/) and [asdf-vm](https://asdf-vm.com/#/core-manage-asdf-vm):
+
+    ```shell
+    brew install asdf
+    echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
+    echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.zshrc
+    asdf plugin-add python
+    asdf install python 3.8.2
+    asdf global python 3.8.2
+    pip install --upgrade pip
+    ```
+  </details>
 
 * Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
-  ```shell
-  # Sample instruction for macOS users:
-  pip install ansible
-  asdf reshim python # if you use asdf-vm
-  ```
+  <details>
+    <summary>See sample instruction for macOS users</summary>
 
-### Target machine
+    #### Installing Ansible using [Homebrew](https://brew.sh/):
 
-* A server with [Debian GNU/Linux](https://www.debian.org/) 10 (Buster) operating system.
+    ```shell
+    pip install ansible
+    asdf reshim python # if you use asdf-vm
+    ```
+  </details>
 
 ## Configuration
 
