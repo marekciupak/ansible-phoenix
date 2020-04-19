@@ -1,0 +1,6 @@
+---
+- name: update message of the day
+  template:
+    src: motd
+    dest: /etc/motd
+  become: yes

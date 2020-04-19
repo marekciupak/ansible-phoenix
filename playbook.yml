@@ -6,6 +6,7 @@
 
   roles:
     - role: ufw
+    - role: motd
     - role: utils
     - role: sudo
       tags: users
