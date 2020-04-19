@@ -31,11 +31,17 @@ Scripts for provisioning a server to host [Phoenix Framework](https://www.phoeni
 
 ### Target machine
 
-  * A server with [Debian GNU/Linux](https://www.debian.org/) 10 (Buster) operating system.
+* A server with [Debian GNU/Linux](https://www.debian.org/) 10 (Buster) operating system.
 
 ## Configuration
 
-Create `inventory` file and `host_vars/` directory with your own config in the root directory of this repo. Use files from [vagrant](/vagrant/) directory as an example.
+1. Copy sample config:
+
+    ```shell
+    cp vagrant/inventory inventory && cp -r vagrant/host_vars/ host_vars/
+    ```
+
+2. Update sample `inventory` and `host_vars/` (in main directory of this repo) with your own config.
 
 ## Usage
 
