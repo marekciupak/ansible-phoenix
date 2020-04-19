@@ -13,3 +13,4 @@
       tags: users
     - role: postgresql
     - role: phoenix_app
+    - role: nginx
