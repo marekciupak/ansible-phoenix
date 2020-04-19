@@ -4,7 +4,7 @@
     state: present
     system: "{{ item.system | default(omit) }}"
     name: "{{ item.name }}"
-    groups: "{{ item.groups | default(omit) }}"
+    groups: "{{ item.groups | default([]) }}"
     shell: /bin/bash
     create_home: "{{ item.create_home | default(omit) }}"
   become: true
