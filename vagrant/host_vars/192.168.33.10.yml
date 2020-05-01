@@ -42,17 +42,22 @@ users:
       - sudo
       - deploy
     authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    shell: /bin/bash
   - name: ci
     groups:
       - deploy
     authorized_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    shell: /bin/bash
   - name: my_app
     system: yes
+    shell: /usr/sbin/nologin
     create_home: no
+    home: /srv/my_app
 postgresql__db_name: my_app_prod
 postgresql__user_name: my_app
 postgresql__user_password: "123456"
 phoenix_app__app_name: my_app
+phoenix_app__root_path: /srv/my_app
 phoenix_app__service_user: my_app
 phoenix_app__service_group: my_app
 phoenix_app__deploy_group: deploy

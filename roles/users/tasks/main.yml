@@ -12,8 +12,9 @@
     system: "{{ item.system | default(omit) }}"
     name: "{{ item.name }}"
     groups: "{{ item.groups | default([]) }}"
-    shell: /bin/bash
+    shell: "{{ item.shell | default(omit) }}"
     create_home: "{{ item.create_home | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
   become: true
   with_items: "{{ users }}"
 

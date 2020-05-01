@@ -6,11 +6,11 @@ Wants=postgresql.service
 [Service]
 Type=simple
 Restart=on-failure
-ExecStart=/srv/{{ phoenix_app__app_name }}/current/bin/{{ phoenix_app__app_name }} start
+ExecStart={{ phoenix_app__root_path }}/current/bin/{{ phoenix_app__app_name }} start
 User={{ phoenix_app__service_user }}
 Group={{ phoenix_app__service_group }}
-WorkingDirectory=/srv/{{ phoenix_app__app_name }}/current/
-EnvironmentFile=/srv/{{ phoenix_app__app_name }}/config/env
+WorkingDirectory={{ phoenix_app__root_path }}/current/
+EnvironmentFile={{ phoenix_app__root_path }}/config/env
 
 [Install]
 WantedBy=multi-user.target
