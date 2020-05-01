@@ -13,7 +13,8 @@ ufw__rules:
   - rule: allow
     proto: tcp
     direction: out
-    to_port: 22
+    from_port: 22
+    to_ip: 192.168.33.1
   - rule: allow
     proto: tcp
     direction: out
@@ -25,6 +26,7 @@ ufw__rules:
   - rule: allow
     proto: tcp
     direction: in
+    from_ip: 192.168.33.1
     to_port: 22
   - rule: allow
     proto: tcp
